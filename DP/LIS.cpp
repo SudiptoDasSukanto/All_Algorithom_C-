@@ -38,6 +38,26 @@ void naive_LIS(int input[],int n){
         cout << path[i] <<"  ";
     }cout << endl;
 }
+
+void optimalSolution(int input[],int n){
+    vector<int> ans ;
+    int p = -1 ;
+    
+    for(int i=1 ; i<n ; i++){
+        if(input[i]>input[i-1]){
+            ans.push_back(input[i]);
+            p++;
+        }else{
+            if(input[i]>input[i-2]){
+                ans[p] = input[i];
+            }else continue ;
+        }
+    }
+    for(int i=0 ; i<=p ; i++){
+        cout << ans[i] << " ";
+    }cout << endl;
+}
+
 int main(){
     int n ;
     cin >> n ;
@@ -46,4 +66,5 @@ int main(){
         cin >> input[i];
     }
     naive_LIS(input,n);
+    optimalSolution(input,n);
 }
