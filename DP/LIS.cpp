@@ -39,7 +39,7 @@ void naive_LIS(int input[],int n){
     }cout << endl;
 }
 
-void optimalSolution(int input[],int n){
+void optimalSolution1(int input[],int n){
     vector<int> ans ;
     int p = -1 ;
     
@@ -58,6 +58,37 @@ void optimalSolution(int input[],int n){
     }cout << endl;
 }
 
+int binarySearch(vector<int>&arr ,int s , int e , int target){
+    int left = s ;
+    int right = e ;
+    while(left<right){
+        int mid = (left+right)/2 ;
+        if(arr[mid]<=target) left = mid+1 ;
+        else right = mid ;
+    }
+
+    return left ;
+    
+}
+
+void optimalSolution2(int input[],int n){
+    vector<int> ans(n,INT_MAX) ;
+    ans[0] = INT_MIN ;
+    
+    for(int i=1 ; i<n ; i++){
+        int l = binarySearch(ans,0,n,input[i]);
+        //int l = upper_bound(ans.begin(),ans.end(),input[i]);
+        if(ans[l-1]<input[i] && ans[l]>input[i]){
+            ans[l] = input[i];
+        }
+    }
+
+    for(int i=1 ; i<n ; i++){
+        if(ans[i]!=INT_MAX)cout << ans[i] << " ";
+    }
+    
+}
+
 int main(){
     int n ;
     cin >> n ;
@@ -66,5 +97,5 @@ int main(){
         cin >> input[i];
     }
     naive_LIS(input,n);
-    optimalSolution(input,n);
+    optimalSolution2(input,n);
 }
